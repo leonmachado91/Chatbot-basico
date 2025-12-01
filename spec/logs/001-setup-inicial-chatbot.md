@@ -1,4 +1,4 @@
-# Relatório de Sessão 001: Setup Inicial e Implementação do Chatbot Grok
+# Relatório de Sessão 001: Setup Inicial e Implementação do Decrypt Chat
 
 ## Resumo Cronológico
 
@@ -33,22 +33,25 @@
 
 ### Configuração e Documentação
 
-- `spec/proposal.md` (Modificado)
+* `spec/proposal.md` (Modificado)
+
 * `spec/tasks.md` (Modificado)
 * `.env.local` (Criado)
 
 ### Core da Aplicação
 
-- `src/app/layout.tsx` (Modificado: Metadados, fontes, fix de hidratação)
+* `src/app/layout.tsx` (Modificado: Metadados, fontes, fix de hidratação)
+
 * `src/app/page.tsx` (Modificado: Lógica do chat, estado, UI)
 * `src/app/globals.css` (Modificado: Limpeza de estilos base)
 * `src/lib/utils.ts` (Criado: Utilitário `cn`)
 
 ### API
 
-- `src/app/api/chat/route.ts` (Criado: Proxy OpenRouter)
+* `src/app/api/chat/route.ts` (Criado: Proxy OpenRouter)
 
 ### Componentes
 
-- `src/components/chat/chat-message.tsx` (Criado: Exibição de mensagens com Markdown)
+* `src/components/chat/chat-message.tsx` (Criado: Exibição de mensagens com Markdown)
+
 * `src/components/chat/chat-input.tsx` (Criado: Input de texto)

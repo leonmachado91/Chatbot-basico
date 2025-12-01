@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chatbot Grok",
+  title: "Decrypt Chat",
   description: "Interface de chat com IA usando modelo Grok via OpenRouter",
 };
 

@@ -28,11 +28,12 @@ export async function POST(req: Request) {
                 "Authorization": `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
                 "HTTP-Referer": "http://localhost:3000",
-                "X-Title": "Chatbot Grok",
+                "X-Title": "Decrypt Chat",
             },
             body: JSON.stringify({
                 model: DEFAULT_MODEL,
                 messages,
+                stream: true, // Enable streaming
             }),
         });
 
@@ -41,8 +42,37 @@ export async function POST(req: Request) {
             return NextResponse.json(errorData, { status: response.status });
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Create a stream to forward the response
+        const stream = new ReadableStream({
+            async start(controller) {
+                const reader = response.body?.getReader();
+                if (!reader) {
+                    controller.close();
+                    return;
+                }
+
+                try {
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        controller.enqueue(value);
+                    }
+                } catch (err) {
+                    console.error("Stream error:", err);
+                    controller.error(err);
+                } finally {
+                    controller.close();
+                }
+            },
+        });
+
+        return new NextResponse(stream, {
+            headers: {
+                "Content-Type": "text/event-stream",
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+            },
+        });
     } catch (error) {
         console.error("Error processing chat request:", error);
         return NextResponse.json(
